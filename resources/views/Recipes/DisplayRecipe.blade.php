@@ -16,12 +16,9 @@
 </ul>
 
 <h2>Delete a recipe:</h2>
-<form method="POST" action="{{ route('recipes.destroy', ['name' => $recipe->name]) }}">
+<form method="POST" action="{{ route('recipes.destroy', $recipe->id) }}">
     @csrf
     @method('DELETE')
-    <input type="text" name="name" placeholder="Enter name" class="form-control">
-    <button type="submit" class="btn btn-primary" >Delete</button>
+    <button type="submit">Delete</button>
 </form>
-@endsection
-
 

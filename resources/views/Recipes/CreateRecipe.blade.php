@@ -6,18 +6,19 @@
 <h2>Add New Recipe</h2>
 <form method="POST" action="{{ route('recipes.store') }}">
     @csrf
-    <label class="form-label">Name:</label>
-    <input type="text" name="name" class="form-control" required>
+    <label>Name:</label>
+    <input type="text" name="name" required>
 
-    <label class="form-label">Description:</label>
-    <input type="text" name="desc" class="form-control" required>
+    <label>Description:</label>
+    <input type="text" name="description" required>
 
-    <label class="form-label">Ingredients:</label>
-    <input type="text" name="ingredients" class="form-control" required>
+    <label>Ingredients:</label>
+    <input type="text" name="ingredients" required>
 
-    <label class="form-label">Instructions:</label>
-    <input type="text" name="instructions" class="form-control" required>
+    <label>Instructions:</label>
+    <input type="text" name="instructions" required>
 
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit">Save</button>
 </form>
 @endsection
+

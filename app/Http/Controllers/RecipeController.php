@@ -14,7 +14,7 @@ class RecipeController extends Controller
     public function index()
     {
         $recipes = Recipe::all();
-        return view('recipes.index', compact('recipes'));
+        return view('DisplayRecipe', compact('recipes'));
     }
 
     /**
@@ -32,71 +32,55 @@ class RecipeController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'desc' => 'required|string',
+            'description' => 'required|string',
             'ingredients' => 'required|string',
             'instructions' => 'required|string'
         ]);
 
-        $recipe = new Recipe;
-        $recipe->name = $request->name;
-        $recipe->description = $request->desc;
-        $recipe->ingredients = $request->ingredients;
-        $recipe->instructions = $request->instructions;
-        $recipe->save();
+        Recipe::create($request->all());
 
-        Session::flash('message', 'Successfully created recipe!');
-        return redirect()->route('recipes.index');
+        return redirect()->route('recipe.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $name)
+    public function show(Recipe $recipe)
     {
-        $recipe = Recipe::where('name', $name)->firstOrFail();
         return view('ViewRecipe', compact('recipe'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $name)
+    public function edit(Recipe $recipe)
     {
-        $recipe = Recipe::where('name', $name)->firstOrFail();
         return view('EditRecipe', compact('recipe'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $oldname)
+    public function update(Request $request, Recipe $recipe)
     {
-        $recipe = Recipe::where('name', $oldname)->firstOrFail();
-
         $request->validate([
-            'newname' => 'required|string|max:255',
-            'desc' => 'required|string',
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
             'ingredients' => 'required|string',
             'instructions' => 'required|string'
         ]);
 
-        $recipe->name = $request->newname;
-        $recipe->description = $request->desc;
-        $recipe->ingredients = $request->ingredients;
-        $recipe->instructions = $request->instructions;
-        $recipe->save();
+        $recipe->update($request->all());
 
-        return redirect()->route('recipes.index');
+        return redirect()->route('recipe.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $name)
+    public function destroy(Recipe $recipe)
     {
-        $recipe = Recipe::where('name', $name)->firstOrFail();
         $recipe->delete();
-
-        return redirect()->route('recipes.index');
+        return redirect()->route('DisplayRecipe')->with('success', 'Recipe deleted successfully!');
     }
 }

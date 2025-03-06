@@ -1,30 +1,26 @@
-
-
-@extends('layouts/app')
+@extends('layouts.app')
 
 @section('title', 'Edit Recipe')
 
 @section('content')
-<h2>Edit recipe</h2>
-       
-    <form method="post" action="PUT/PATCH /recipes/{oldname, newname,desc, ingredients, instructions } ->update">
-        @csrf
-        <label for="" class="form-label">Enter original name:</label>
-        <input type="text" placeholder="name" name="oldname" class="form-check-input">
+<h2>Edit Recipe</h2>
 
-        <label for="" class="form-label">Enter new name:</label>
-        <input type="text" placeholder="newname" name="newname" class="form-check-input">
+<form method="POST" action="{{ route('recipes.update', $recipe->id) }}">
+    @csrf
+    @method('PUT')
 
-        <label for="" class="form-label">Enter Description:</label>
-        <input type="text" placeholder="Description" name="desc" class="form-check-input">
+    <label>Name:</label>
+    <input type="text" name="name" value="{{ $recipe->name }}" required>
 
-        <label for="" class="form-label">Enter Ingredients:</label>
-        <input type="text" placeholder="Ingredients" name="ingredients" class="form-check-input">
+    <label>Description:</label>
+    <input type="text" name="description" value="{{ $recipe->description }}" required>
 
-        <label for="" class="form-label">Enter Instructions:</label>
-        <input type="text" placeholder="Instructions" name="instructions" class="form-check-input">
+    <label>Ingredients:</label>
+    <input type="text" name="ingredients" value="{{ $recipe->ingredients }}" required>
 
-        <button type="submit" class="btn btn-primary">Save</button>
-    </form>
-    
+    <label>Instructions:</label>
+    <input type="text" name="instructions" value="{{ $recipe->instructions }}" required>
+
+    <button type="submit">Update</button>
+</form>
 @endsection
